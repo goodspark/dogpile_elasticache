@@ -75,9 +75,9 @@ class ElasticachePyMemcacheBackend(GenericMemcachedBackend):
 
     def _imports(self):
         global pymemcache
-        import pymemcache  # noqa
-        from pymemcache.client import base, hash  # noqa
-        from pymemcache import serde  # noqa
+        import pymemcache  # noqa: F401
+        from pymemcache.client import base, hash  # noqa: F401
+        from pymemcache import serde  # noqa: F401
 
     def __init__(self, arguments):
         self._imports()
@@ -112,7 +112,7 @@ class ElasticachePyMemcacheBackend(GenericMemcachedBackend):
     def get_hosts(self):
         try:
             info = get_cluster_info(self.config_host, self.config_port)
-        except:
+        except Exception:
             raise ClusterDiscoveryError("Failed to get cluster nodes")
 
         hosts = info['nodes']
