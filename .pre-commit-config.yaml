@@ -1,0 +1,32 @@
+---
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0
+    hooks:
+      # Filesystem
+      - id: check-case-conflict
+      - id: check-symlinks
+      # Whitespace
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.20.0
+    hooks:
+      - id: yamllint
+        args:
+          - --strict
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.5.1
+    hooks:
+      - id: python-check-blanket-noqa
+      - id: python-check-mock-methods
+      - id: python-no-log-warn
+# TODO: Once Python 2 support is dropped, this can be be uncommented to get
+# automatic Python 3 upgrades.
+#   - repo: https://github.com/asottile/pyupgrade
+#     rev: v2.1.0
+#     hooks:
+#       - id: pyupgrade

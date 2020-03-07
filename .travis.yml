@@ -18,6 +18,10 @@ jobs:
       python: '3.8'
       script: tox -e py38
 
+    - name: Style
+      python: '3.8'
+      script: tox -e style
+
 branches:
   only:
     - master
