@@ -1,0 +1,23 @@
+---
+os: linux
+dist: bionic
+language: python
+install: pip install -U tox
+
+jobs:
+  include:
+    - name: Python 2.7 tests
+      python: '2.7'
+      script: tox -e py27
+
+    - name: Python 3.7 tests
+      python: '3.7'
+      script: tox -e py37
+
+    - name: Python 3.8 tests
+      python: '3.8'
+      script: tox -e py38
+
+branches:
+  only:
+    - master
