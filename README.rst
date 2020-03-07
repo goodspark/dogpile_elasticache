@@ -2,6 +2,12 @@
 Dogpile Elasticache
 ===================
 
+.. image:: https://travis-ci.org/ludia/dogpile_elasticache.svg?branch=master
+    :target: https://travis-ci.org/ludia/dogpile_elasticache
+
+.. image:: https://img.shields.io/pypi/pyversions/dogpile_elasticache
+    :alt: PyPI - Python Version
+
 Dogpile backend for AWS Elasticache Memcache service. Uses
 `pymemcache <https://github.com/Pinterest/pymemcache>`_ to connect to
 nodes of the Elasticache cluster with
