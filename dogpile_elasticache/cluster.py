@@ -5,8 +5,9 @@ Almost entirely copied from https://github.com/gusdan/django-elasticache
 
 import re
 from distutils.version import StrictVersion
-import six
 from telnetlib import Telnet
+
+import six
 
 
 class WrongProtocolData(ValueError):
@@ -14,7 +15,8 @@ class WrongProtocolData(ValueError):
 
     def __init__(self, cmd, response):
         super(WrongProtocolData, self).__init__(
-            'Unexpected response {} for command {}'.format(response, cmd))
+            "Unexpected response {} for command {}".format(response, cmd)
+        )
 
 
 def get_cluster_info(host, port, timeout=10):
@@ -24,20 +26,20 @@ def get_cluster_info(host, port, timeout=10):
         dict like {'nodes': ['IP:port'], 'version': '1.4.4'}
     """
     client = Telnet(host, int(port))
-    client.write(b'version\n')
-    res = client.read_until(b'\r\n', timeout=timeout).strip()
-    version_list = res.split(b' ')
-    if len(version_list) != 2 or version_list[0] != b'VERSION':
-        raise WrongProtocolData('version', res)
+    client.write(b"version\n")
+    res = client.read_until(b"\r\n", timeout=timeout).strip()
+    version_list = res.split(b" ")
+    if len(version_list) != 2 or version_list[0] != b"VERSION":
+        raise WrongProtocolData("version", res)
     version = version_list[1]
-    if StrictVersion(six.ensure_str(version)) >= StrictVersion('1.4.14'):
-        cmd = b'config get cluster\n'
+    if StrictVersion(six.ensure_str(version)) >= StrictVersion("1.4.14"):
+        cmd = b"config get cluster\n"
     else:
-        cmd = b'get AmazonElastiCache:cluster\n'
+        cmd = b"get AmazonElastiCache:cluster\n"
     client.write(cmd)
-    res = client.read_until(b'\n\r\nEND\r\n', timeout=timeout)
+    res = client.read_until(b"\n\r\nEND\r\n", timeout=timeout)
     client.close()
-    ls = list(filter(None, re.compile(br'\r?\n').split(res)))
+    ls = list(filter(None, re.compile(br"\r?\n").split(res)))
     if len(ls) != 4:
         raise WrongProtocolData(cmd, res)
 
@@ -48,12 +50,9 @@ def get_cluster_info(host, port, timeout=10):
 
     nodes = []
     try:
-        for node in ls[2].split(b' '):
-            host, ip, port = node.split(b'|')
+        for node in ls[2].split(b" "):
+            host, ip, port = node.split(b"|")
             nodes.append((six.ensure_str(ip or host), int(port)))
     except ValueError:
         raise WrongProtocolData(cmd, res)
-    return {
-        'version': version,
-        'nodes': nodes
-    }
+    return {"version": version, "nodes": nodes}

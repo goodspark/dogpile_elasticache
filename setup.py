@@ -4,11 +4,12 @@
 # you should have received as part of this distribution.
 # Author: Pior Bastida <pbastida@ludia.com>
 
-from setuptools import setup, find_packages
 import codecs
 import sys
 
-version = '0.2.dev0'
+from setuptools import find_packages, setup
+
+version = "0.2.dev0"
 
 # Py2 & 3 compatibility: 'unicode' function was removed.
 # Equivalent is 'str' in Py3.
@@ -17,13 +18,13 @@ if sys.version_info.major >= 3:
 
 
 def read(filename):
-    return unicode(codecs.open(filename, encoding='utf-8').read())
+    return unicode(codecs.open(filename, encoding="utf-8").read())
 
 
-long_description = '\n\n'.join([read('README.rst'), read('CHANGES.rst')])
+long_description = "\n\n".join([read("README.rst"), read("CHANGES.rst")])
 
 setup(
-    name='dogpile_elasticache',
+    name="dogpile_elasticache",
     version=version,
     description="Dogpile backend for AWS Elasticache Memcache service",
     long_description=long_description,
@@ -36,24 +37,20 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
-    keywords='dogpile cache aws elasticache memcache',
-    author='Pior Bastida',
-    author_email='pbastida@ludia.com',
-    url='https://github.com/ludia/dogpile_elasticache',
-    license='MIT',
+    keywords="dogpile cache aws elasticache memcache",
+    author="Pior Bastida",
+    author_email="pbastida@ludia.com",
+    url="https://github.com/ludia/dogpile_elasticache",
+    license="MIT",
     packages=find_packages(),
-    install_requires=[
-        'dogpile.cache',
-        'pymemcache',
-        'six',
-    ],
+    install_requires=["dogpile.cache", "pymemcache", "six"],
     extras_require={
-        'test': ['nose', 'nosexcover', 'mock', 'zest.releaser[recommended]'],
-        },
+        "test": ["nose", "nosexcover", "mock", "zest.releaser[recommended]"],
+    },
     entry_points={
-        'dogpile.cache': [
-            'elasticache_pymemcache = '
-            'dogpile_elasticache.backends:ElasticachePyMemcacheBackend',
+        "dogpile.cache": [
+            "elasticache_pymemcache = "
+            "dogpile_elasticache.backends:ElasticachePyMemcacheBackend",
         ],
     },
 )
