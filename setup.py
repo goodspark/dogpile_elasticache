@@ -6,8 +6,14 @@
 
 from setuptools import setup, find_packages
 import codecs
+import sys
 
 version = '0.2.dev0'
+
+# Py2 & 3 compatibility: 'unicode' function was removed.
+# Equivalent is 'str' in Py3.
+if sys.version_info.major >= 3:
+    unicode = str
 
 
 def read(filename):
@@ -26,6 +32,8 @@ setup(
         "Operating System :: POSIX :: Linux",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
     keywords='dogpile cache aws elasticache memcache',
     author='Pior Bastida',
@@ -36,6 +44,7 @@ setup(
     install_requires=[
         'dogpile.cache',
         'pymemcache',
+        'six',
     ],
     extras_require={
         'test': ['nose', 'nosexcover', 'mock', 'zest.releaser[recommended]'],

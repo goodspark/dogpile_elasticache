@@ -3,8 +3,9 @@
 Almost entirely copied from https://github.com/gusdan/django-elasticache
 """
 
-from distutils.version import StrictVersion
 import re
+from distutils.version import StrictVersion
+import six
 from telnetlib import Telnet
 
 
@@ -29,7 +30,7 @@ def get_cluster_info(host, port, timeout=10):
     if len(version_list) != 2 or version_list[0] != b'VERSION':
         raise WrongProtocolData('version', res)
     version = version_list[1]
-    if StrictVersion(str(version)) >= StrictVersion('1.4.14'):
+    if StrictVersion(six.ensure_str(version)) >= StrictVersion('1.4.14'):
         cmd = b'config get cluster\n'
     else:
         cmd = b'get AmazonElastiCache:cluster\n'
@@ -49,7 +50,7 @@ def get_cluster_info(host, port, timeout=10):
     try:
         for node in ls[2].split(b' '):
             host, ip, port = node.split(b'|')
-            nodes.append((str(ip or host), int(port)))
+            nodes.append((six.ensure_str(ip or host), int(port)))
     except ValueError:
         raise WrongProtocolData(cmd, res)
     return {

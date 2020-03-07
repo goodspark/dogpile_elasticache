@@ -92,4 +92,4 @@ class Test(unittest.TestCase):
         client = backend._create_client()
         self.assertIsInstance(client, pymemcache.client.hash.HashClient)
 
-        self.assertEqual(client.clients.keys(), ['127.0.0.1:11211'])
+        self.assertEqual(list(client.clients.keys()), ['127.0.0.1:11211'])
